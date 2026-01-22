@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待办事项应用</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 待办事项</h1>
+        </header>
+        
+        <main>
+            <!-- 任务添加区域 -->
+            <section class="add-task-section">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="taskInput" 
+                        placeholder="添加新任务..." 
+                        aria-label="添加新任务"
+                    >
+                    <select 
+                        id="prioritySelect" 
+                        aria-label="选择任务优先级"
+                    >
+                        <option value="medium">中优先级</option>
+                        <option value="high">高优先级</option>
+                        <option value="low">低优先级</option>
+                    </select>
+                    <button 
+                        id="addTaskBtn" 
+                        aria-label="添加任务"
+                    >
+                        添加
+                    </button>
+                </div>
+            </section>
+            
+            <!-- 任务统计区域 -->
+            <section class="stats-section">
+                <div class="stat-item">
+                    <span class="stat-label">未完成</span>
+                    <span class="stat-number" id="pendingCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">已完成</span>
+                    <span class="stat-number" id="completedCount">0</span>
+                </div>
+            </section>
+            
+            <!-- 任务列表区域 -->
+            <section class="task-list-section">
+                <div class="section-header">
+                    <h2>任务列表</h2>
+                    <button 
+                        id="clearAllBtn" 
+                        aria-label="全部清空任务"
+                        class="clear-all-btn"
+                    >
+                        🗑️ 全部清空
+                    </button>
+                </div>
+                <ul id="taskList" class="task-list"></ul>
+            </section>
+        </main>
+    </div>
+    
+    <!-- 自定义确认弹窗 -->
+    <div id="confirmDialog" class="confirm-dialog">
+        <div class="confirm-dialog-overlay"></div>
+        <div class="confirm-dialog-content">
+            <div class="confirm-dialog-header">
+                <h3>确认操作</h3>
+                <button class="dialog-close-btn" onclick="closeConfirmDialog()" aria-label="关闭">
+                    ×
+                </button>
+            </div>
+            <div class="confirm-dialog-body">
+                <p id="confirmMessage">此操作将删除所有数据，且无法恢复。是否确认执行？</p>
+            </div>
+            <div class="confirm-dialog-footer">
+                <button id="cancelBtn" class="dialog-btn dialog-btn-cancel" onclick="closeConfirmDialog()">
+                    取消
+                </button>
+                <button id="confirmBtn" class="dialog-btn dialog-btn-confirm" onclick="confirmAction()">
+                    确认
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
