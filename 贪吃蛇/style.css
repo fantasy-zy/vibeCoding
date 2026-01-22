@@ -1,0 +1,484 @@
+/*
+    贪吃蛇游戏 - 样式表文件
+    功能：定义游戏的所有视觉样式和响应式布局
+    包含：全局样式、游戏容器、控制按钮、动画效果、媒体查询等
+*/
+
+/* 全局样式重置：清除所有元素的默认边距和内边距，设置盒模型为border-box */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 页面主体样式 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* 背景渐变：从紫色到深紫色，营造游戏氛围 */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    /* 使用Flexbox居中显示游戏容器 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 游戏主容器样式 */
+.game-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    /* 阴影效果：增加立体感 */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+}
+
+/* 游戏头部区域样式 */
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 游戏标题样式 */
+.game-header h1 {
+    color: #333;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    /* 文字阴影：增加层次感 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 分数显示面板样式 */
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    /* 内阴影效果：增加凹陷感 */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 单个分数项样式 */
+.score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 分数标签样式 */
+.score-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* 分数值样式 */
+.score-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+/* 游戏控制区域样式 */
+.game-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+/* 难度选择器和音效控制样式 */
+.difficulty-selector,
+.sound-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 控制器标签样式 */
+.difficulty-selector label,
+.sound-control label {
+    color: #333;
+    font-weight: 500;
+}
+
+/* 难度选择下拉框样式 */
+#difficulty {
+    padding: 8px 12px;
+    border: 2px solid #667eea;
+    border-radius: 5px;
+    background: white;
+    color: #333;
+    font-size: 0.9em;
+    cursor: pointer;
+    /* 过渡动画：悬停时平滑过渡 */
+    transition: all 0.3s ease;
+}
+
+/* 难度选择下拉框悬停效果 */
+#difficulty:hover {
+    border-color: #764ba2;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* 音效开关复选框样式 */
+#sound-toggle {
+    width: 50px;
+    height: 26px;
+    cursor: pointer;
+}
+
+/* 画布包装区域样式 */
+.canvas-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 游戏画布样式 */
+#game-canvas {
+    border: 3px solid #667eea;
+    border-radius: 10px;
+    background: #1a1a2e;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    height: auto;
+}
+
+/* 游戏覆盖层样式：用于显示游戏状态信息 */
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    opacity: 1;
+    /* 透明度过渡动画 */
+    transition: opacity 0.3s ease;
+}
+
+/* 覆盖层隐藏状态 */
+.game-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 覆盖层内容容器样式 */
+.overlay-content {
+    text-align: center;
+    color: white;
+}
+
+/* 覆盖层标题样式 */
+#overlay-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #667eea;
+}
+
+/* 覆盖层消息样式 */
+#overlay-message {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+/* 游戏按钮区域样式 */
+.game-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* 主按钮和次级按钮通用样式 */
+.btn-primary,
+.btn-secondary {
+    padding: 12px 30px;
+    font-size: 1em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 主按钮样式（开始按钮） */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* 主按钮悬停效果 */
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* 主按钮点击效果 */
+.btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* 次级按钮样式（暂停、重新开始按钮） */
+.btn-secondary {
+    background: #f8f9fa;
+    color: #333;
+    border: 2px solid #667eea;
+}
+
+/* 次级按钮悬停效果 */
+.btn-secondary:hover:not(:disabled) {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* 次级按钮点击效果 */
+.btn-secondary:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* 禁用按钮样式 */
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 游戏说明区域样式 */
+.game-instructions {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* 游戏说明标题样式 */
+.game-instructions h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+/* 游戏说明列表样式 */
+.game-instructions ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* 游戏说明列表项样式 */
+.game-instructions li {
+    padding: 8px 0;
+    color: #555;
+    padding-left: 25px;
+    position: relative;
+}
+
+/* 游戏说明列表项箭头标记 */
+.game-instructions li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* 移动端控制区域样式：默认隐藏，在小屏幕设备上显示 */
+.mobile-controls {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+/* 移动端按钮样式 */
+.mobile-btn {
+    padding: 15px;
+    font-size: 1.5em;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 移动端按钮悬停效果 */
+.mobile-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 移动端按钮点击效果 */
+.mobile-btn:active {
+    transform: scale(0.95);
+}
+
+/* 移动端按钮网格布局：上按钮 */
+.mobile-btn:nth-child(1) {
+    grid-column: 2;
+}
+
+/* 移动端按钮网格布局：左按钮 */
+.mobile-btn:nth-child(2) {
+    grid-column: 1;
+}
+
+/* 移动端按钮网格布局：下按钮 */
+.mobile-btn:nth-child(3) {
+    grid-column: 2;
+}
+
+/* 移动端按钮网格布局：右按钮 */
+.mobile-btn:nth-child(4) {
+    grid-column: 3;
+}
+
+/* 媒体查询：平板设备（最大宽度768px） */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 20px;
+    }
+
+    .game-header h1 {
+        font-size: 1.8em;
+    }
+
+    .score-board {
+        padding: 10px;
+    }
+
+    .score-value {
+        font-size: 1.4em;
+    }
+
+    .game-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #game-canvas {
+        width: 300px;
+        height: 300px;
+    }
+
+    .game-overlay {
+        width: 300px;
+        height: 300px;
+    }
+
+    .game-buttons {
+        flex-wrap: wrap;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    /* 在平板设备上显示移动端控制 */
+    .mobile-controls {
+        display: grid;
+    }
+
+    /* 在平板设备上隐藏游戏说明 */
+    .game-instructions {
+        display: none;
+    }
+}
+
+/* 媒体查询：手机设备（最大宽度480px） */
+@media (max-width: 480px) {
+    .game-container {
+        padding: 15px;
+    }
+
+    .game-header h1 {
+        font-size: 1.5em;
+    }
+
+    .score-board {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #game-canvas {
+        width: 250px;
+        height: 250px;
+    }
+
+    .game-overlay {
+        width: 250px;
+        height: 250px;
+    }
+
+    .overlay-content h2 {
+        font-size: 1.5em;
+    }
+
+    .overlay-content p {
+        font-size: 1em;
+    }
+
+    .game-buttons {
+        gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 8px 15px;
+        font-size: 0.8em;
+    }
+}
+
+/* 动画：脉冲效果（用于分数更新） */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* 分数值更新时的动画效果 */
+.score-value.updated {
+    animation: pulse 0.3s ease;
+    color: #764ba2;
+}
+
+/* 动画：淡入效果（用于游戏容器） */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 游戏容器加载时的淡入动画 */
+.game-container {
+    animation: fadeIn 0.5s ease;
+}
