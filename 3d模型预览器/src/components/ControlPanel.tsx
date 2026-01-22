@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './ControlPanel.css'
 
 interface ControlPanelProps {

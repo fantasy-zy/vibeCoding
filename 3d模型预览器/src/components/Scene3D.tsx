@@ -279,7 +279,7 @@ const Scene3D: React.FC<Scene3DProps> = ({
             onLoadingProgress(percent)
           }
         },
-        (error) => {
+        (_error) => {
           onError('模型加载失败，请检查文件是否有效。')
           onLoadingComplete()
         }
@@ -299,7 +299,7 @@ const Scene3D: React.FC<Scene3DProps> = ({
             onLoadingProgress(percent)
           }
         },
-        (error) => {
+        (_error) => {
           onError('模型加载失败，请检查文件是否有效。')
           onLoadingComplete()
         }
@@ -319,7 +319,7 @@ const Scene3D: React.FC<Scene3DProps> = ({
             onLoadingProgress(percent)
           }
         },
-        (error) => {
+        (_error) => {
           onError('模型加载失败，请检查文件是否有效。')
           onLoadingComplete()
         }
@@ -458,12 +458,10 @@ const Scene3D: React.FC<Scene3DProps> = ({
         if (child instanceof THREE.Mesh && child.material) {
           if (Array.isArray(child.material)) {
             child.material.forEach(material => {
-              if (material instanceof THREE.Material) {
-                material.wireframe = wireframe
-              }
+              (material as any).wireframe = wireframe
             })
-          } else if (child.material instanceof THREE.Material) {
-            child.material.wireframe = wireframe
+          } else {
+            (child.material as any).wireframe = wireframe
           }
         }
       })
